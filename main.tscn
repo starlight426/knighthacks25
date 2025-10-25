@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmb36xi1ow4fb"]
+
+[ext_resource type="PackedScene" uid="uid://bpq4dlk3hl0lf" path="res://bulletshooter.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://c4fjwyifnt11u" path="res://player.tscn" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://bf8ikcyuotppl" path="res://Knighthacks_8_Base_Background.jpg" id="3_h2yge"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Bulletshooter" parent="." instance=ExtResource("1_0xm2m")]
+position = Vector2(551, 158)
+
+[node name="Player" parent="." instance=ExtResource("2_h2yge")]
+position = Vector2(529, 570)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(567, 334)
+texture = ExtResource("3_h2yge")

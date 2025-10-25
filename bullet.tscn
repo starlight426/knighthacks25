@@ -1,3 +1,16 @@
-[gd_scene format=3 uid="uid://3nt5f8l4g2su"]
+[gd_scene load_steps=4 format=3 uid="uid://3nt5f8l4g2su"]
 
-[node name="Bullet" type="RigidBody2D"]
+[ext_resource type="Script" uid="uid://bcmefi7im4l1c" path="res://bullet.gd" id="1_v7oki"]
+[ext_resource type="Texture2D" uid="uid://6toqxn7l6x6w" path="res://icon.svg" id="2_v8qja"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v7oki"]
+
+[node name="Bullet" type="CharacterBody2D"]
+script = ExtResource("1_v7oki")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_v7oki")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_v8qja")

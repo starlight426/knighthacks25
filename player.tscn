@@ -1,5 +1,35 @@
-[gd_scene format=3 uid="uid://c4fjwyifnt11u"]
+[gd_scene load_steps=6 format=3 uid="uid://c4fjwyifnt11u"]
 
-[node name="Player" type="Node2D"]
+[ext_resource type="Script" uid="uid://ee6i4q5lrfq4" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://k7gv61c84ud8" path="res://Knight_Sprite.jpg" id="2_onrkg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i3pqv"]
+radius = 55.03635
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_4flbx")
 
 [node name="ClosestBulletDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClosestBulletDetector"]
+shape = SubResource("CircleShape2D_4flbx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_onrkg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_onrkg")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_i3pqv")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
