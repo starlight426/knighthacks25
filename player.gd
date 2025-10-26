@@ -24,14 +24,19 @@ var front_has_more_bullets = false
 var back_has_more_bullets = false
 var how_long_closest_bullet_has_been_closest = 0
 
+var python_path = "C:\\Users\\Juneb\\Documents\\GitHub\\knighthacks25\\PythonScripts\\env\\Scripts\\python.exe"
+var script_path = "C:\\Users\\Juneb\\Documents\\GitHub\\knighthacks25\\PythonScripts\\your_script.py"
 
-func _ready() -> void:
-	for i in range(0,20):
-		await get_tree().create_timer(0.5).timeout
-		move_right()
+
+#func _ready() -> void:
+	#for i in range(0,20):
+		#await get_tree().create_timer(0.5).timeout
+		#move_right()
 	
+var frame_count = 0
+var frame_limit = 15  # Send state every 5 frames
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	
 	if(hp <= 0):
 		die()
@@ -71,12 +76,15 @@ func _physics_process(delta: float) -> void:
 	#print(front_has_more_bullets)
 	#print(back_has_more_bullets)
 		
-		
+	frame_count += 1
+	if frame_count % frame_limit ==0:
+		send_state(distance_from_closest_bullet)	
 	score += 1
 		
 	
 func die():
 	player_die.emit()
+	#gameover()
 	pass
 	
 func move_left():
@@ -91,7 +99,31 @@ func move_up():
 func move_down():
 	position.y += 5
 	
+func send_state(state: float):
 	
+	var args = [str(state)]
+	var command = [python_path, script_path] + args
+	var output = []
+	print("Sending state: " + str(state))
+	OS.execute(command[0], command.slice(1), output)
+	move()
+
+func read_action():
+	var file = FileAccess.open("C:\\Users\\Juneb\\Documents\\GitHub\\knighthacks25\\PythonScripts\\action.txt", FileAccess.READ)
+	var text = file.get_as_text()
+	file.close()
+	var action = int(text.strip_edges())
+	return action
+	
+func move():
+	var action = read_action()
+	print (action)
+	match action:
+		0: move_left()
+		1: move_right()
+		2: move_up()
+		3: move_down()
+		
 	
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	body.queue_free()
@@ -116,3 +148,5 @@ func update_front_number(new_number):
 	
 func update_back_number(new_number):
 	back_number = new_number
+#func gameover():
+	#get_tree().reload_current_scene()

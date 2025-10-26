@@ -64,7 +64,7 @@ class Agent():
         if np.random.random() > self.E:
             state = T.tensor([observation]).to(self.Q_eval.device)
             actions = self.Q_eval.forward(state)
-            action = T.argmax(actions).item()
+            action = T.argmax(actions)
         
         return action
     
