@@ -1,14 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4fjwyifnt11u"]
+[gd_scene load_steps=9 format=3 uid="uid://c4fjwyifnt11u"]
 
 [ext_resource type="Script" uid="uid://ee6i4q5lrfq4" path="res://player.gd" id="1_4flbx"]
-[ext_resource type="Texture2D" uid="uid://k7gv61c84ud8" path="res://Knight_Sprite.jpg" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://c24d0hge88ff6" path="res://closest_bullet_detector.gd" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://c55k03abcqcpa" path="res://Knight_Sprite.png" id="2_onrkg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
+radius = 517.001
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i3pqv"]
-radius = 55.03635
+radius = 32.01562
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
+size = Vector2(245, 346)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
+size = Vector2(261, 347)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 0
@@ -16,12 +24,13 @@ collision_mask = 0
 script = ExtResource("1_4flbx")
 
 [node name="ClosestBulletDetector" type="Area2D" parent="."]
+script = ExtResource("2_i3pqv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClosestBulletDetector"]
 shape = SubResource("CircleShape2D_4flbx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.15, 0.15)
 texture = ExtResource("2_onrkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -31,5 +40,17 @@ shape = SubResource("CircleShape2D_onrkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_i3pqv")
+
+[node name="LeftDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDetector"]
+position = Vector2(-113.5, -45)
+shape = SubResource("RectangleShape2D_i3pqv")
+
+[node name="RightDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightDetector"]
+position = Vector2(120.5, -44.5)
+shape = SubResource("RectangleShape2D_hqtel")
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

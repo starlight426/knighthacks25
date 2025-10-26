@@ -1,18 +1,65 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmb36xi1ow4fb"]
+[gd_scene load_steps=7 format=3 uid="uid://dmb36xi1ow4fb"]
 
 [ext_resource type="PackedScene" uid="uid://bpq4dlk3hl0lf" path="res://bulletshooter.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://ca5vckwokqdo7" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c4fjwyifnt11u" path="res://player.tscn" id="2_h2yge"]
-[ext_resource type="Texture2D" uid="uid://bf8ikcyuotppl" path="res://Knighthacks_8_Base_Background.jpg" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://c0g7lcblkak1m" path="res://Knighthacks_8_Base_Background.png" id="4_1bvp3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(58, 694)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(933, 86)
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_1bvp3")
 
 [node name="Bulletshooter" parent="." instance=ExtResource("1_0xm2m")]
-position = Vector2(551, 158)
+position = Vector2(355, 38)
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
 position = Vector2(529, 570)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(567, 334)
-texture = ExtResource("3_h2yge")
+position = Vector2(576, 340)
+scale = Vector2(0.7337963, 0.6712963)
+texture = ExtResource("4_1bvp3")
+
+[node name="Wall1" type="Area2D" parent="."]
+position = Vector2(155, 325)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall1"]
+position = Vector2(-22, 8)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="Wall2" type="Area2D" parent="."]
+position = Vector2(1003, 334)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+position = Vector2(25, 4)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="Wall3" type="Area2D" parent="."]
+position = Vector2(581, -61)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3"]
+position = Vector2(0, -21)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="Wall4" type="Area2D" parent="."]
+position = Vector2(577, 702)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
+position = Vector2(0, 57)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[connection signal="player_die" from="Player" to="." method="_on_player_die"]
