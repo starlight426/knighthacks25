@@ -5,6 +5,8 @@ var hp = 1
 signal player_die
 
 
+var score = 0
+
 #data
 var closest_bullet = null
 
@@ -24,8 +26,9 @@ var how_long_closest_bullet_has_been_closest = 0
 
 
 func _ready() -> void:
-	pass
-	
+	for i in range(0,20):
+		await get_tree().create_timer(0.5).timeout
+		move_right()
 	
 	
 func _physics_process(delta: float) -> void:
@@ -69,11 +72,25 @@ func _physics_process(delta: float) -> void:
 	#print(back_has_more_bullets)
 		
 		
+	score += 1
 		
 	
 func die():
 	player_die.emit()
 	pass
+	
+func move_left():
+	position.x -= 5
+	
+func move_right():
+	position.x += 5
+	
+func move_up():
+	position.y -= 5
+	
+func move_down():
+	position.y += 5
+	
 	
 	
 func _on_hitbox_body_entered(body: Node2D) -> void:
