@@ -11,7 +11,7 @@ radius = 517.001
 [sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i3pqv"]
-radius = 32.01562
+radius = 22.090721
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
 size = Vector2(245, 407)
@@ -37,7 +37,7 @@ script = ExtResource("2_i3pqv")
 shape = SubResource("CircleShape2D_4flbx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_onrkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

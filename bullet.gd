@@ -5,6 +5,7 @@ extends CharacterBody2D
 
 
 func _ready() -> void:
+	speed *= 0.6
 	velocity = Vector2(speed,0).rotated(rotation)
 	
 	await get_tree().create_timer(10.0).timeout
