@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4fjwyifnt11u"]
+[gd_scene load_steps=12 format=3 uid="uid://c4fjwyifnt11u"]
 
 [ext_resource type="Script" uid="uid://ee6i4q5lrfq4" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://c24d0hge88ff6" path="res://closest_bullet_detector.gd" id="2_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://c55k03abcqcpa" path="res://Knight_Sprite.png" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://6a4dc1wjubdx" path="res://bulletdetector.gd" id="4_hqtel"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
 radius = 517.001
@@ -13,10 +14,16 @@ radius = 517.001
 radius = 32.01562
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
-size = Vector2(245, 346)
+size = Vector2(245, 407)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
-size = Vector2(261, 347)
+size = Vector2(264, 408)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sweqy"]
+size = Vector2(491, 338)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2hs0m"]
+size = Vector2(491, 175)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 0
@@ -42,15 +49,46 @@ shape = SubResource("CircleShape2D_onrkg")
 shape = SubResource("CircleShape2D_i3pqv")
 
 [node name="LeftDetector" type="Area2D" parent="."]
+script = ExtResource("4_hqtel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDetector"]
-position = Vector2(-113.5, -45)
+position = Vector2(-113.5, -75.5)
 shape = SubResource("RectangleShape2D_i3pqv")
 
 [node name="RightDetector" type="Area2D" parent="."]
+script = ExtResource("4_hqtel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightDetector"]
-position = Vector2(120.5, -44.5)
+position = Vector2(122, -75)
 shape = SubResource("RectangleShape2D_hqtel")
 
+[node name="FrontDetector" type="Area2D" parent="."]
+script = ExtResource("4_hqtel")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrontDetector"]
+position = Vector2(10.5, -159)
+shape = SubResource("RectangleShape2D_sweqy")
+
+[node name="BackDetector" type="Area2D" parent="."]
+script = ExtResource("4_hqtel")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackDetector"]
+position = Vector2(11.5, 77.5)
+shape = SubResource("RectangleShape2D_2hs0m")
+
+[connection signal="body_entered" from="ClosestBulletDetector" to="ClosestBulletDetector" method="detection_area_entered"]
+[connection signal="body_exited" from="ClosestBulletDetector" to="ClosestBulletDetector" method="detection_area_exited"]
+[connection signal="update_parent_target" from="ClosestBulletDetector" to="." method="update_closest_bullet"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="LeftDetector" to="LeftDetector" method="detection_area_entered"]
+[connection signal="body_exited" from="LeftDetector" to="LeftDetector" method="detection_area_exited"]
+[connection signal="update_parent_number" from="LeftDetector" to="." method="update_left_number"]
+[connection signal="body_entered" from="RightDetector" to="RightDetector" method="detection_area_entered"]
+[connection signal="body_exited" from="RightDetector" to="RightDetector" method="detection_area_exited"]
+[connection signal="update_parent_number" from="RightDetector" to="." method="update_right_number"]
+[connection signal="body_entered" from="FrontDetector" to="FrontDetector" method="detection_area_entered"]
+[connection signal="body_exited" from="FrontDetector" to="FrontDetector" method="detection_area_exited"]
+[connection signal="update_parent_number" from="FrontDetector" to="." method="update_front_number"]
+[connection signal="body_entered" from="BackDetector" to="BackDetector" method="detection_area_entered"]
+[connection signal="body_exited" from="BackDetector" to="BackDetector" method="detection_area_exited"]
+[connection signal="update_parent_number" from="BackDetector" to="." method="update_back_number"]
